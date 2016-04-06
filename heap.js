@@ -1,3 +1,10 @@
+/**
+ * @Last modified by:   guiguan
+ * @Last modified time: 2016-04-06T16:59:12+10:00
+ */
+
+
+
 'use strict'
 
 function PairingHeapNode(weight, parent, left, right) {
