@@ -1,6 +1,6 @@
 {
   "name": "pairing-heap",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A pairing heap",
   "main": "heap.js",
   "directories": {
@@ -25,6 +25,16 @@
     "structure"
   ],
   "author": "Mikola Lysenko",
+  "contributors": [
+    {
+        "name": "Mikola Lysenko",
+        "web": "http://0fps.net"
+    },
+    {
+        "name": "Guan Gui",
+        "web": "http://guiguan.net"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/mikolalysenko/pairing-heap/issues"

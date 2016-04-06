@@ -1,3 +1,13 @@
+/**
+ * @Author: Guan Gui <guiguan>
+ * @Date:   2016-04-06T16:43:56+10:00
+ * @Email:  root@guiguan.net
+ * @Last modified by:   guiguan
+ * @Last modified time: 2016-04-06T19:01:20+10:00
+ */
+
+
+
 'use strict'
 
 var tape = require('tape')
@@ -13,7 +23,7 @@ function checkHeapInvariant(t, root) {
     }
     t.equals(node.parent, parent, 'parent ok')
     if(leader !== pq.NIL) {
-      t.ok(leader.weight < node.weight, 'weight ok')
+      t.ok(leader.item < node.item, 'weight ok')
     }
     checkNode(node.left, node, node)
     checkNode(node.right, node, leader)
@@ -39,19 +49,19 @@ tape('pairing heap fuzz test', function(t) {
   for(var i=0; i<200; ++i) {
     var j = (Math.random()*100)|0
     var node = items[j]
-    node.weight -= Math.random()
+    node.item -= Math.random()
     root = pq.decreaseKey(root, node)
 
     checkHeapInvariant(t, root)
   }
 
   items.sort(function(a,b) {
-    return a.weight - b.weight
+    return a.item - b.item
   })
 
   while(items.length > 0) {
     var node = items.shift()
-    t.equals(node, root, 'items in order: ' + node.weight + ' = ' + root.weight)
+    t.equals(node, root, 'items in order: ' + node.item + ' = ' + root.item)
     root = pq.pop(root)
     checkHeapInvariant(t, root)
   }

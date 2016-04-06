@@ -1,22 +1,36 @@
 /**
  * @Last modified by:   guiguan
- * @Last modified time: 2016-04-06T16:59:12+10:00
+ * @Last modified time: 2016-04-06T19:33:52+10:00
  */
 
 
 
 'use strict'
 
-function PairingHeapNode(weight, parent, left, right) {
-  this.weight = weight
+function PairingHeapNode(item, parent, left, right) {
+  this.item = item
   this.parent = parent
   this.left   = left
   this.right  = right
 }
 
 //Sentinel node
-var NIL = new PairingHeapNode(-Infinity, null, null, null)
+var NIL = new PairingHeapNode(null, null, null, null)
 NIL.left = NIL.right = NIL.parent = NIL
+
+function compare(item1, item2) {
+  if (item1 == null) {
+    return -1
+  } else if (item2 == null) {
+    return 1
+  } else if (typeof item1 === 'number') {
+    return item1 - item2
+  } else {
+    // assume the user has provided a comparator function in their item objects
+    console.log(item1, item2)
+    return item1.compare(item2)
+  }
+}
 
 function link(a, b) {
   var al = a.left
@@ -33,7 +47,7 @@ function merge(a, b) {
     return b
   } else if(b === NIL) {
     return a
-  } else if(a.weight < b.weight) {
+  } else if(compare(a.item, b.item) < 0) {
     return link(a, b)
   } else {
     return link(b, a)
@@ -74,7 +88,7 @@ function takeMin(root) {
 
 function decreaseKey(root, p) {
   var q = p.parent
-  if(q.weight < p.weight) {
+  if(compare(q.item, p.item) < 0) {
     return root
   }
   var r = p.right
@@ -84,7 +98,7 @@ function decreaseKey(root, p) {
   } else {
     q.right = r
   }
-  if(root.weight <= p.weight) {
+  if(compare(root.item, p.item) <= 0) {
     var l = root.left
     l.parent = p
     p.right = l
@@ -102,9 +116,9 @@ function decreaseKey(root, p) {
   }
 }
 
-function makeHeap(weight) {
+function makeHeap(item) {
   return new PairingHeapNode(
-    weight,
+    item,
     NIL,
     NIL,
     NIL)
@@ -113,5 +127,8 @@ function makeHeap(weight) {
 exports.NIL = NIL
 exports.create = makeHeap
 exports.merge = merge
+exports.push = function(root, item) {
+  return merge(root, makeHeap(item))
+}
 exports.pop = takeMin
 exports.decreaseKey = decreaseKey
