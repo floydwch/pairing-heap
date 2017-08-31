@@ -27,7 +27,6 @@ function compare(item1, item2) {
     return item1 - item2
   } else {
     // assume the user has provided a comparator function in their item objects
-    console.log(item1, item2)
     return item1.compare(item2)
   }
 }
